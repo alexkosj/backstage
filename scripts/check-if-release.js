@@ -49,7 +49,7 @@ async function runPlain(cmd, ...args) {
 }
 
 async function main() {
-  const parentRef = 'HEAD~50';
+  const parentRef = 'HEAD^';
   process.cwd(resolvePath(__dirname, '..'));
 
   const diff = await runPlain(
@@ -57,8 +57,10 @@ async function main() {
     'diff',
     '--name-only',
     parentRef,
-    '{packages,plugins}/*/package.json',
+    'packages/*/package.json',
+    'plugins/*/package.json',
   );
+  console.log('DEBUG: diff =', diff);
   const packageList = diff.split(/^(.*)$/gm).filter(s => s.trim());
 
   const packageVersions = await Promise.all(
@@ -72,18 +74,19 @@ async function main() {
       return { name, oldVersion, newVersion };
     }),
   );
+  console.log('DEBUG: packageVersions =', packageVersions);
 
   const newVersions = packageVersions.filter(
     ({ oldVersion, newVersion }) => oldVersion !== newVersion,
   );
 
   if (newVersions.length === 0) {
-    console.log('No package version bumps found, no release needed');
+    console.log('No package version bumps detected, no release needed');
     console.log(`::set-output name=needs_release::false`);
     return;
   }
 
-  console.log('Package version bumps found, a new release is needed');
+  console.log('Package version bumps detected, a new release is needed');
   const maxLength = Math.max(...newVersions.map(_ => _.name.length));
   for (const { name, oldVersion, newVersion } of newVersions) {
     console.log(
