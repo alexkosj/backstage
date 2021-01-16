@@ -58,17 +58,20 @@ export class UrlReaderPredicateMux implements UrlReader {
     throw new Error(`No reader found that could handle '${url}'`);
   }
 
-  readTree(url: string, options?: ReadTreeOptions): Promise<ReadTreeResponse> {
+  async readTree(
+    url: string,
+    options?: ReadTreeOptions,
+  ): Promise<ReadTreeResponse> {
     const parsed = new URL(url);
 
     for (const { predicate, reader } of this.readers) {
       if (predicate(parsed)) {
-        return reader.readTree(url, options);
+        return await reader.readTree(url, options);
       }
     }
 
     if (this.fallback) {
-      return this.fallback.readTree(url, options);
+      return await this.fallback.readTree(url, options);
     }
 
     throw new Error(`No reader found that could handle '${url}'`);
