@@ -17,8 +17,8 @@ import { createPlugin, createRouteRef } from '@backstage/core';
 import ExampleComponent from './components/ExampleComponent';
 
 export const rootRouteRef = createRouteRef({
-  path: '/terraform-cloud',
-  title: 'terraform-cloud',
+  path: '/terraformcloud',
+  title: 'Terraform Cloud',
 });
 
 export const plugin = createPlugin({
