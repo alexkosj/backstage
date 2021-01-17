@@ -22,7 +22,7 @@ export const rootRouteRef = createRouteRef({
 });
 
 export const plugin = createPlugin({
-  id: 'terraform-cloud',
+  id: 'terraformcloud',
   register({ router }) {
     router.addRoute(rootRouteRef, ExampleComponent);
   },

@@ -23,6 +23,7 @@ import MapIcon from '@material-ui/icons/MyLocation';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import MoneyIcon from '@material-ui/icons/MonetizationOn';
+import CloudIcon from '@material-ui/icons/Cloud';
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
 import {
@@ -93,6 +94,7 @@ const Root = ({ children }: PropsWithChildren<{}>) => (
         to={graphiQLRouteRef.path}
         text={graphiQLRouteRef.title}
       />
+      <SidebarItem icon={CloudIcon} to="terraformcloud" text="Terraform Cloud" />
       <SidebarSpace />
       <SidebarDivider />
       <SidebarSettings />
